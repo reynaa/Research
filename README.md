@@ -30,22 +30,24 @@ from the last (which is n-1 since we start with 0, not 1).
 start the loop, which goes from 0 to n-2
 FOR i=0,n_visits-2 DO BEGIN
 This next FOR loop will need to take each component and subtract it from the last so that it counts down.
- i.e : 0=15, 1=14, 2=13,......,9=6, ..., 13=1
+i.e : 0=15, 1=14, 2=13,......,9=6, ..., 13=1
   
-  ;Generalize the saving of files 
-  file_name = string('2M03430679+3148204,')
+Generalize the saving of files 
   
-  This will store the iterations from a given i into folders in a directory Reyna
+file_name = string('2M03430679+3148204,')
   
-  FILE_MKDIR, '/Volumes/coveydata/APOGEE_Spectra/Reyna/' + file_name + strtrim(string(i),1)
+This will store the iterations from a given i into folders in a directory Reyna
   
-    FOR j =i+1, n_visits-1 DO BEGIN
+FILE_MKDIR, '/Volumes/coveydata/APOGEE_Spectra/Reyna/' + file_name + strtrim(string(i),1)
+  
+ FOR j =i+1, n_visits-1 DO BEGIN
 
   difference the n-th CCF from the last (which is n_visits-1)
 
   this_diff = spectra1.rv.ccf[*,i] - spectra1.rv.ccf[*,j]
 
   plot the difference CCF along with the two that I started with to check if it looks the way I expect.
+  
   PLOT, spectra1.rv.ccf[*,i], YRANGE = [-0.5 * MAX(spectra1.rv.ccf[*,i]), MAX(spectra1.rv.ccf[*,i])], /YSTY
 
    /buffer command allows the plots to not be shown
@@ -54,11 +56,13 @@ This next FOR loop will need to take each component and subtract it from the las
           plot2=plot(spectra1.rv.ccf[*,n_visits-1], LINESTYLE=2 ,/overplot, /buffer, NAME='--- CCF 2') ; plot last CCF as dashed line
 
   Label the visit and run number (number of times it goes through the loop)
+  
    plot3=plot(this_diff, /overplot, /buffer, 'r2', NAME='CCF Diff',TITLE = ' FITS NAME: '+ file_name + ' '+ 'Visit: '+ '  ' + strtrim(string(i),1) + '   '+ 'Iteration: ' + strtrim(string(j),1)) 
 
 
           
    Creating a legend
+   
     leg=LEGEND(TARGET=[plot1, plot2, plot3], POSITION = [0.9,0.8], sample_width = 0, /NORMAL, /AUTO_TEXT_COLOR) 
 
 _______________________________________________________________________
