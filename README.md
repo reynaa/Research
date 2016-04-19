@@ -144,7 +144,7 @@ Integ_resd1 = TEXT(25.0,0.25, '$diff^2$/$\sigma$:'+ STRMID(STRTRIM(STRING(integ_
 ________________________________________________________________________
 Saving individual plots to Reyna Folder as titles of data
 
-plot1.save, '/Volumes/coveydata/APOGEE_Spectra/Reyna/'+file_name + strtrim(string(i),1) + '/CCF_Diff' + strtrim(string(j),1)+'.png'
+//plot1.save, '/Volumes/coveydata/APOGEE_Spectra/Reyna/'+file_name + strtrim(string(i),1) + '/CCF_Diff' + strtrim(string(j),1)+'.png'
 ----------------------------------------------------------------------
      Code for making a CSV file
     
@@ -174,4 +174,5 @@ plot1.save, '/Volumes/coveydata/APOGEE_Spectra/Reyna/'+file_name + strtrim(strin
 close the loop (so let the loop go back to the top.)
 
 ENDFOR
+
 END  
