@@ -14,10 +14,10 @@ all_ccfs = N_ELEMENTS(spectra1.rv.ccf [0,*])
 n_visits = all_ccfs-2
 print, n_visits
 
-;set guess for APOGEE_resolution
+set guess for APOGEE_resolution
 resolution = 3.
 cspeed = 2.99792458d5
-;set factor for converting lag space to velocities. ccfdw = 6e-6
+set factor for converting lag space to velocities. ccfdw = 6e-6
 ccfdw = spectra1.rv.ccfdw
 
 ---------------------------------------------------------------------------------
@@ -132,8 +132,9 @@ Call the max value/ possible index of the result
       print, 'Maximum: ' ,maximum
  __________________________________________________________________________________________________________________________
    XYOUTS for plotting important values
-
-Integ = TEXT( 25.,0.4, 'Integration : '+ STRMID(STRTRIM(STRING(integral),2),0,10), /DATA, FONT_SIZE = 10, FONT_NAME = 'Helvetica')
+//
+Integ = TEXT( 25.,0.4, 'Integration : '+ STRMID(STRTRIM(STRING(integral),2),0,10), 
+/DATA, FONT_SIZE = 10, FONT_NAME = 'Helvetica')
 IntegS = TEXT( 25,0.37, '$( Integrat )^2$: '+ STRMID(STRTRIM(STRING(integral_squared),2),0,10), /DATA, FONT_SIZE = 10, FONT_NAME = 'Helvetica')
 Maxs = TEXT( 25.0,0.34, 'Max: '+ STRMID(STRTRIM(STRING(MAX(this_diff)),2),0,6), /DATA, FONT_SIZE = 10, FONT_NAME = 'Helvetica')
 RootMS = TEXT( 25.0,0.31, 'Rms: '+ STRMID(STRTRIM(STRING(Sigma_1),2),0,6), /DATA, FONT_SIZE = 10, FONT_NAME = 'Helvetica')
@@ -142,6 +143,7 @@ Integ_resd1 = TEXT(25.0,0.25, '$diff^2$/$\sigma$:'+ STRMID(STRTRIM(STRING(integ_
 
 ________________________________________________________________________
 Saving individual plots to Reyna Folder as titles of data
+
 plot1.save, '/Volumes/coveydata/APOGEE_Spectra/Reyna/'+file_name + strtrim(string(i),1) + '/CCF_Diff' + strtrim(string(j),1)+'.png'
 ----------------------------------------------------------------------
      Code for making a CSV file
