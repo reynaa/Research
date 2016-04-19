@@ -80,10 +80,13 @@ Finding the RMS.
 
 
 This array will take the sum of the first section of 'wiggles'
+
     x = spectra1.rv.ccf [0.0:75.0]
 This array will take the sum of the second section of 'wiggles' 
+
     y = spectra1.rv.ccf[375.0:400.0]
 Testing if input of math effects the reading of code
+
     z = (this_diff)^2.
 
     Sigma_1 = SQRT((1/n)*TOTAL(x ^ 2.))
