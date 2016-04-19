@@ -74,9 +74,10 @@ _______________________________________________________________________
 Detecting the change. Need to integrate over the residuals and divide by the "window of interest" 
 
 Finding the RMS.
+
     These are the elements that are equivalent to N
-    n = 75.
-    m = 80.
+         n = 75.
+         m = 80.
 
 
 This array will take the sum of the first section of 'wiggles'
