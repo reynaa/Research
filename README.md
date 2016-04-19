@@ -3,22 +3,22 @@ This will contain the code for Detecting Binaries Via Cross Correlation Function
 
 Below is the IDL formatted code thus far:
 
-PRO test_cc_subtraction, spectra1file, spectra2file
-cd, '/Volumes/coveydata/APOGEE_Spectra'
+    PRO test_cc_subtraction, spectra1file, spectra2file
+    cd, '/Volumes/coveydata/APOGEE_Spectra'
 
-apload, 'APOGEE_DR12_ApStar/'+spectra1file, spectra1
-HELP, spectra1.rv
-spectra1 = MRDFITS(spectra1file, 2)
+    apload, 'APOGEE_DR12_ApStar/'+spectra1file, spectra1
+    HELP, spectra1.rv
+    spectra1 = MRDFITS(spectra1file, 2)
 
-all_ccfs = N_ELEMENTS(spectra1.rv.ccf [0,*])
-n_visits = all_ccfs-2
-print, n_visits
+    all_ccfs = N_ELEMENTS(spectra1.rv.ccf [0,*])
+    n_visits = all_ccfs-2
+    print, n_visits
 
 set guess for APOGEE_resolution
-resolution = 3.
-cspeed = 2.99792458d5
+    resolution = 3.
+    cspeed = 2.99792458d5
 set factor for converting lag space to velocities. ccfdw = 6e-6
-ccfdw = spectra1.rv.ccfdw
+    ccfdw = spectra1.rv.ccfdw
 
 ---------------------------------------------------------------------------------
 
@@ -70,57 +70,57 @@ _______________________________________________________________________
 Detecting the change. Need to integrate over the residuals and divide by the "window of interest" 
 
 Finding the RMS.
-These are the elements that are equivalent to N
-n = 75.
-m = 80.
+    These are the elements that are equivalent to N
+    n = 75.
+    m = 80.
 
 
 This array will take the sum of the first section of 'wiggles'
-x = spectra1.rv.ccf [0.0:75.0]
+    x = spectra1.rv.ccf [0.0:75.0]
 This array will take the sum of the second section of 'wiggles' 
-y = spectra1.rv.ccf[375.0:400.0]
+    y = spectra1.rv.ccf[375.0:400.0]
 Testing if input of math effects the reading of code
-z = (this_diff)^2.
+    z = (this_diff)^2.
 
-Sigma_1 = SQRT((1/n)*TOTAL(x ^ 2.))
-Sig = SQRT((1/n)*TOTAL(y ^ 2.))
-sums = TSUM( this_diff^2.0 / Sig)
-sums2 = TSUM( this_diff / Sig)
+    Sigma_1 = SQRT((1/n)*TOTAL(x ^ 2.))
+    Sig = SQRT((1/n)*TOTAL(y ^ 2.))
+    sums = TSUM( this_diff^2.0 / Sig)
+    sums2 = TSUM( this_diff / Sig)
 
-print, 'Outer Integration: ' , sums
-print, ' Outer Integ w/o square: ', sums2
+    print, 'Outer Integration: ' , sums
+    print, ' Outer Integ w/o square: ', sums2
 
-Sigma_2 = SQRT((1/m)*TOTAL(x^2.))
+    Sigma_2 = SQRT((1/m)*TOTAL(x^2.))
 
  Now we need to find the summation of the residuals divided by the RMS: Try squaring and not squaring the residuals.
  
-  integrated_res2 = TSUM( z / Sigma_1)
-  integrated_res1 = TSUM( this_diff / Sigma_1)
+      integrated_res2 = TSUM( z / Sigma_1)
+      integrated_res1 = TSUM( this_diff / Sigma_1)
  
  
  Now, let's check the other possibilities. What if we don't divide by Sigma. Try squaring and not squaring the residuals.
-  integrated_resid1 = TSUM( this_diff)
-  integrated_resid2 = TSUM( this_diff^2)
+      integrated_resid1 = TSUM( this_diff)
+      integrated_resid2 = TSUM( this_diff^2)
  
  Using Sigma_2
 
-  integ_res2 = TSUM( z / Sigma_2)
-  integ_res1 = TSUM( this_diff / Sigma_2)
+      integ_res2 = TSUM( z / Sigma_2)
+      integ_res1 = TSUM( this_diff / Sigma_2)
  
-  print, 'IRNS&D2 by RMS: ' , integ_res2 
-  print, 'IRS&D2 by RMS: ' , integ_res1 
+     print, 'IRNS&D2 by RMS: ' , integ_res2 
+     print, 'IRS&D2 by RMS: ' , integ_res1 
  
 
-  print, 'IRNS&D by RMS:', integrated_res1
-  print,  'IRS&D by RMS:', integrated_res2
+      print, 'IRNS&D by RMS:', integrated_res1
+     print,  'IRS&D by RMS:', integrated_res2
 
 
-  print, 'IRNS:',integrated_resid1         
-  print, 'IRS:',integrated_resid2
+      print, 'IRNS:',integrated_resid1         
+     print, 'IRS:',integrated_resid2
 
-  print,'Visit number:' , i
+     print,'Visit number:' , i
   Date of the visits
-   print, 'Visit i:' , spectra1.rv.jd[i]-2.45D6 , '   Visit j:' ,  spectra1.rv.jd[j]-2.45D6
+      print, 'Visit i:' , spectra1.rv.jd[i]-2.45D6 , '   Visit j:' ,  spectra1.rv.jd[j]-2.45D6
 
 Call the area under the residuals and print the value of them:
       integral = TSUM(this_diff)
