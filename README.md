@@ -40,24 +40,24 @@ This will store the iterations from a given i into folders in a directory Reyna
   
 FILE_MKDIR, '/Volumes/coveydata/APOGEE_Spectra/Reyna/' + file_name + strtrim(string(i),1)
   
- FOR j =i+1, n_visits-1 DO BEGIN
+       FOR j =i+1, n_visits-1 DO BEGIN
 
   difference the n-th CCF from the last (which is n_visits-1)
 
-  this_diff = spectra1.rv.ccf[*,i] - spectra1.rv.ccf[*,j]
+     this_diff = spectra1.rv.ccf[*,i] - spectra1.rv.ccf[*,j]
 
   plot the difference CCF along with the two that I started with to check if it looks the way I expect.
   
-  PLOT, spectra1.rv.ccf[*,i], YRANGE = [-0.5 * MAX(spectra1.rv.ccf[*,i]), MAX(spectra1.rv.ccf[*,i])], /YSTY
+      PLOT, spectra1.rv.ccf[*,i], YRANGE = [-0.5 * MAX(spectra1.rv.ccf[*,i]), MAX(spectra1.rv.ccf[*,i])], /YSTY
 
    /buffer command allows the plots to not be shown
 
-  plot1=plot(spectra1.rv.ccf[*,i], YRANGE = [-0.5 * MAX(spectra1.rv.ccf[*,i]), MAX(spectra1.rv.ccf[*,i])], /buffer, NAME='    CCF 1')     (solid line)
+      plot1=plot(spectra1.rv.ccf[*,i], YRANGE = [-0.5 * MAX(spectra1.rv.ccf[*,i]), MAX(spectra1.rv.ccf[*,i])], /buffer, NAME='    CCF 1') (solid line)
           plot2=plot(spectra1.rv.ccf[*,n_visits-1], LINESTYLE=2 ,/overplot, /buffer, NAME='--- CCF 2') ; plot last CCF as dashed line
 
   Label the visit and run number (number of times it goes through the loop)
   
-   plot3=plot(this_diff, /overplot, /buffer, 'r2', NAME='CCF Diff',TITLE = ' FITS NAME: '+ file_name + ' '+ 'Visit: '+ '  ' + strtrim(string(i),1) + '   '+ 'Iteration: ' + strtrim(string(j),1)) 
+      plot3=plot(this_diff, /overplot, /buffer, 'r2', NAME='CCF Diff',TITLE = ' FITS NAME: '+ file_name + ' '+ 'Visit: '+ '  ' + strtrim(string(i),1) + '   '+ 'Iteration: ' + strtrim(string(j),1)) 
 
 
           
