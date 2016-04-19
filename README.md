@@ -15,10 +15,13 @@ Below is the IDL formatted code thus far:
     print, n_visits
 
 set guess for APOGEE_resolution
+
     resolution = 3.
     cspeed = 2.99792458d5
-set factor for converting lag space to velocities. ccfdw = 6e-6
-    ccfdw = spectra1.rv.ccfdw
+set factor for converting lag space to velocities. 
+
+        ccfdw = 6e-6
+        ccfdw = spectra1.rv.ccfdw
 
 ---------------------------------------------------------------------------------
 
@@ -28,18 +31,18 @@ make a loop that runs through the first n-2 visits anddifferences the CCFs
 from the last (which is n-1 since we start with 0, not 1).
 
 start the loop, which goes from 0 to n-2
-FOR i=0,n_visits-2 DO BEGIN
+
+    FOR i=0,n_visits-2 DO BEGIN
 This next FOR loop will need to take each component and subtract it from the last so that it counts down.
 i.e : 0=15, 1=14, 2=13,......,9=6, ..., 13=1
   
 Generalize the saving of files 
-  
-file_name = string('2M03430679+3148204,')
+
+        file_name = string('2M03430679+3148204,')
   
 This will store the iterations from a given i into folders in a directory Reyna
-  
-FILE_MKDIR, '/Volumes/coveydata/APOGEE_Spectra/Reyna/' + file_name + strtrim(string(i),1)
-  
+
+        FILE_MKDIR, '/Volumes/coveydata/APOGEE_Spectra/Reyna/' + file_name + strtrim(string(i),1)
        FOR j =i+1, n_visits-1 DO BEGIN
 
   difference the n-th CCF from the last (which is n_visits-1)
@@ -57,7 +60,8 @@ FILE_MKDIR, '/Volumes/coveydata/APOGEE_Spectra/Reyna/' + file_name + strtrim(str
 
   Label the visit and run number (number of times it goes through the loop)
   
-      plot3=plot(this_diff, /overplot, /buffer, 'r2', NAME='CCF Diff',TITLE = ' FITS NAME: '+ file_name + ' '+ 'Visit: '+ '  ' + strtrim(string(i),1) + '   '+ 'Iteration: ' + strtrim(string(j),1)) 
+        plot3=plot(this_diff, /overplot, /buffer, 'r2', NAME='CCF Diff',TITLE = ' FITS NAME: '+ file_name + ' '+ 'Visit: '+ '  ' +
+         strtrim(string(i),1) + '   '+ 'Iteration: ' + strtrim(string(j),1)) 
 
 
           
@@ -92,13 +96,15 @@ Testing if input of math effects the reading of code
 
     Sigma_2 = SQRT((1/m)*TOTAL(x^2.))
 
- Now we need to find the summation of the residuals divided by the RMS: Try squaring and not squaring the residuals.
+ Now we need to find the summation of the residuals divided by the RMS: Try squaring and not squaring the residuals.\
  
-      integrated_res2 = TSUM( z / Sigma_1)
-      integrated_res1 = TSUM( this_diff / Sigma_1)
+        integrated_res2 = TSUM( z / Sigma_1)
+        
+        integrated_res1 = TSUM( this_diff / Sigma_1)
  
  
  Now, let's check the other possibilities. What if we don't divide by Sigma. Try squaring and not squaring the residuals.
+ 
       integrated_resid1 = TSUM( this_diff)
       integrated_resid2 = TSUM( this_diff^2)
  
@@ -119,64 +125,68 @@ Testing if input of math effects the reading of code
      print, 'IRS:',integrated_resid2
 
      print,'Visit number:' , i
+     
   Date of the visits
+  
       print, 'Visit i:' , spectra1.rv.jd[i]-2.45D6 , '   Visit j:' ,  spectra1.rv.jd[j]-2.45D6
 
 Call the area under the residuals and print the value of them:
+
       integral = TSUM(this_diff)
       print,'Integral: ', integral
 
 Call the squared of the area under the residual to see the differences summed
+
       integral_squared = TSUM(this_diff ^ 2.0)
       print, 'Squared:', integral_squared
 
 
 Call the max value/ possible index of the result
+
       maximum = MAX(this_diff)
       print, 'Maximum: ' ,maximum
  __________________________________________________________________________________________________________________________
    XYOUTS for plotting important values
-//
-Integ = TEXT( 25.,0.4, 'Integration : '+ STRMID(STRTRIM(STRING(integral),2),0,10), 
-/DATA, FONT_SIZE = 10, FONT_NAME = 'Helvetica')
-IntegS = TEXT( 25,0.37, '$( Integrat )^2$: '+ STRMID(STRTRIM(STRING(integral_squared),2),0,10), /DATA, FONT_SIZE = 10, FONT_NAME = 'Helvetica')
-Maxs = TEXT( 25.0,0.34, 'Max: '+ STRMID(STRTRIM(STRING(MAX(this_diff)),2),0,6), /DATA, FONT_SIZE = 10, FONT_NAME = 'Helvetica')
-RootMS = TEXT( 25.0,0.31, 'Rms: '+ STRMID(STRTRIM(STRING(Sigma_1),2),0,6), /DATA, FONT_SIZE = 10, FONT_NAME = 'Helvetica')
-Integ_resd2 = TEXT(25.0,0.28, 'diff/$\sigma$:'+ STRMID(STRTRIM(STRING(integ_res1),2),0,6), /DATA, FONT_SIZE = 10, FONT_NAME = 'Helvetica')
-Integ_resd1 = TEXT(25.0,0.25, '$diff^2$/$\sigma$:'+ STRMID(STRTRIM(STRING(integ_res2),2),0,6), /DATA, FONT_SIZE = 10, FONT_NAME = 'Helvetica')
+   
+        Integ = TEXT( 25.,0.4, 'Integration : '+ STRMID(STRTRIM(STRING(integral),2),0,10), 
+        /DATA, FONT_SIZE = 10, FONT_NAME = 'Helvetica')
+
+        IntegS = TEXT( 25,0.37, '$( Integrat )^2$: '+ STRMID(STRTRIM(STRING(integral_squared),2),0,10), /DATA, FONT_SIZE = 10, FONT_NAME = 'Helvetica')
+        Maxs = TEXT( 25.0,0.34, 'Max: '+ STRMID(STRTRIM(STRING(MAX(this_diff)),2),0,6), /DATA, FONT_SIZE = 10, FONT_NAME = 'Helvetica')
+        RootMS = TEXT( 25.0,0.31, 'Rms: '+ STRMID(STRTRIM(STRING(Sigma_1),2),0,6), /DATA, FONT_SIZE = 10, FONT_NAME = 'Helvetica')
+        Integ_resd2 = TEXT(25.0,0.28, 'diff/$\sigma$:'+ STRMID(STRTRIM(STRING(integ_res1),2),0,6), /DATA, FONT_SIZE = 10, FONT_NAME = 'Helvetica')
+        Integ_resd1 = TEXT(25.0,0.25, '$diff^2$/$\sigma$:'+ STRMID(STRTRIM(STRING(integ_res2),2),0,6), /DATA, FONT_SIZE = 10, FONT_NAME = 'Helvetica')
 
 ________________________________________________________________________
 Saving individual plots to Reyna Folder as titles of data
 
-//plot1.save, '/Volumes/coveydata/APOGEE_Spectra/Reyna/'+file_name + strtrim(string(i),1) + '/CCF_Diff' + strtrim(string(j),1)+'.png'
+    plot1.save, '/Volumes/coveydata/APOGEE_Spectra/Reyna/'+file_name + strtrim(string(i),1) + '/CCF_Diff' + strtrim(string(j),1)+'.png'
 ----------------------------------------------------------------------
      Code for making a CSV file
     
-  CLOSE, 2
-  OPENW, 2, 'CCF_subtraction_values.tex'
+         CLOSE, 2
+        OPENW, 2, 'CCF_subtraction_values.tex'
 
-  columnalign = 'cccccccccccccc'
-  columnnames = ['2MASS ID', 'Integration', 'Integration Squared', $
-    'Maximum', 'RMS', $
+        columnalign = 'cccccccccccccc'
+         columnnames = ['2MASS ID', 'Integration', 'Integration Squared', $
+         'Maximum', 'RMS', $
       'Integ. not squared/RMS ', 'Integ. squared/RMS', $
       'Confirmed Binary?', 'Sigma 1', $
       'Sigma 2']
 
-   tabletitle = 'CCF Subtraction Values'
-   tablelabel = 'tab:Subtraction Values'
-   , columnnames, columnalign, tabletitle, tablelabel, '\tiny', '0', 2, /LANDSCAPE
+     tabletitle = 'CCF Subtraction Values'
+     tablelabel = 'tab:Subtraction Values'
+     , columnnames, columnalign, tabletitle, tablelabel, '\tiny', '0', 2, /LANDSCAPE
 
-  FOR i=0,n_visits-1 DO BEGIN
- PRINTF, 2, FORMAT = '(A20, 2x,A1, 2x, D13.8,2x,A1,2x,D13.8,2x,A1,2x,F6.2,2x,A1,2x,A10,
- 2x,A1,2x,F6.2,2x,A1,2x,F8.4,2x,A1,2x,A10,2x,A1,2x,F6.2,2x,A1,2x,F6.2,2x,A1,2x,I1,
- 2x,A1,2x,F5.2,2x,A1,2x,F6.2,2x, A1,2x,F7.2,2x,A1,2x,I3,2x,A1,2x,F7.2,2x,A2)',
- spectra1.rv.ccf[*,i], ',',$
- spectra1.rv.ccf[*,i], ',', this_diff[*,i], ',', $
+     FOR i=0,n_visits-1 DO BEGIN
+     PRINTF, 2, FORMAT = '(A20, 2x,A1, 2x, D13.8,2x,A1,2x,D13.8,2x,A1,2x,F6.2,2x,A1,2x,A10,
+     2x,A1,2x,F6.2,2x,A1,2x,F8.4,2x,A1,2x,A10,2x,A1,2x,F6.2,2x,A1,2x,F6.2,2x,A1,2x,I1,
+     2x,A1,2x,F5.2,2x,A1,2x,F6.2,2x, A1,2x,F7.2,2x,A1,2x,I3,2x,A1,2x,F7.2,2x,A2)',
+     spectra1.rv.ccf[*,i], ',',$
+     spectra1.rv.ccf[*,i], ',', this_diff[*,i], ',', $
        
-   ENDFOR 
-   
-close the loop (so let the loop go back to the top.)
+      ENDFOR 
 
-ENDFOR
+    ENDFOR
 
-END  
+    END  
