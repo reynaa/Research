@@ -244,6 +244,37 @@ Saving individual plots to Reyna Folder as titles of data
      spectra1.rv.ccf[*,i], ',',$
      spectra1.rv.ccf[*,i], ',', this_diff[*,i], ',', $
        
+Storing Histograms into the location of the plots
+
+    binsize = 0.1
+    H = HISTOGRAM(Int, BINSIZE = binsize, LOCATIONS = binvals)
+    p = BARPLOT(binvals, H,/buffer)
+    p.save, '/Volumes/coveydata/APOGEE_Spectra/Reyna/'+'Histograms'+file_name + strtrim(string(i),1) + 'Histogram' + strtrim(string(j),1)+'.png'
+
+     H1 = HISTOGRAM(int2,BINSIZE = binsize, LOCATIONS = binvals)
+    p1 = BARPLOT(binvals, H1, /buffer)
+    p.save, '/Volumes/coveydata/APOGEE_Spectra/Reyna/'+'Histograms'+file_name + strtrim(string(i),1) + 'Int2' + strtrim(string(j),1)+'.png'
+
+     H2 = HISTOGRAM(maxes, BINSIZE = binsize, LOCATIONS = binvals)
+     p2 = BARPLOT(binvals, H2, /buffer)
+     p.save, '/Volumes/coveydata/APOGEE_Spectra/Reyna/'+'Histograms'+file_name + strtrim(string(i),1) + 'Maxes' + strtrim(string(j),1)+'.png'
+     
+       H3 = HISTOGRAM(integres1, BINSIZE = binsize, LOCATIONS = binvals)
+      p3 = BARPLOT(binvals, H3, /buffer)
+       p.save, '/Volumes/coveydata/APOGEE_Spectra/Reyna/'+'Histograms'+file_name + strtrim(string(i),1) + 'Integrated Residuals 1' + strtrim(string(j),1)+'.png'
+       
+     H4 = HISTOGRAM(integres2, BINSIZE = binsize, LOCATIONS = binvals)
+     p4 = BARPLOT(binvals, H4, /buffer)
+     p.save, '/Volumes/coveydata/APOGEE_Spectra/Reyna/'+'Histograms'+file_name + strtrim(string(i),1) + 'Integrated Residuals 2' + strtrim(string(j),1)+'.png'
+     
+     H5 = HISTOGRAM(resd, BINSIZE = binsize, LOCATIONS = binvals)
+     p5 = BARPLOT(binvals, H5, /buffer)
+     p.save, '/Volumes/coveydata/APOGEE_Spectra/Reyna/'+'Histograms'+file_name + strtrim(string(i),1) + 'Residuals' + strtrim(string(j),1)+'.png'
+
+     H6 = HISTOGRAM(summation1, BINSIZE = binsize, LOCATIONS = binvals)
+     p6 = BARPLOT(binvals, H6,/buffer)
+     p.save, '/Volumes/coveydata/APOGEE_Spectra/Reyna/'+'Histograms'+file_name + strtrim(string(i),1) + 'Info' +   strtrim(string(j),1)+'.png'
+       
       ENDFOR 
       
 
