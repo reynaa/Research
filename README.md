@@ -190,7 +190,9 @@ Saving individual plots to Reyna Folder as titles of data
      spectra1.rv.ccf[*,i], ',', this_diff[*,i], ',', $
        
       ENDFOR 
-
+      
+This will be the location of the empty arrays to hold the metric values after each iteration.
+Perhaps using a list function and adding elements to it and then converting it to an array? 
     ENDFOR
 
     END  
