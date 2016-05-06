@@ -48,6 +48,16 @@ This will store the iterations from a given i into folders in a directory Reyna
   difference the n-th CCF from the last (which is n_visits-1)
 
      this_diff = spectra1.rv.ccf[*,i] - spectra1.rv.ccf[*,j]
+Creating empty arrays for the metrics
+
+         int = fltarr(21)
+         Int2= FltArr(21)
+          Maxes=FltArr(21)
+          Resd = FltArr(21)
+          Summation1 =fltarr(21)
+          integres1 = fltarr(21)
+           integres2 =fltarr(21)
+  
 
   plot the difference CCF along with the two that I started with to check if it looks the way I expect.
   
@@ -64,6 +74,51 @@ This will store the iterations from a given i into folders in a directory Reyna
          strtrim(string(i),1) + '   '+ 'Iteration: ' + strtrim(string(j),1)) 
 
 
+Functions used to generate the metrics to be stored ( Yes they are mentioned again later in the code but I am trying to see if the values are correctly stored into the array):
+
+    int[j] = TSUM(this_diff)
+        print, 'int', int
+        
+        
+        int2[j] =TSUM(this_diff ^ 2.0)
+        print, 'int2',int2
+        
+        maxes[j] = MAX(this_diff)
+          print, 'maxes', maxes
+          
+          ;This array will take the sum of the first section of 'wiggles'
+          x = this_diff[0.0:75.0]
+          ;This array will take the sum of the second section of 'wiggles'
+          y = this_diff[375.0:400.0] 
+          
+          n = 75.
+          m = 80. 
+          
+          ;Window of interest:
+
+          range1 = this_diff[76:376]
+          
+          Sig = SQRT((1/n)*TOTAL(range1^ 2.))
+          
+          Sigma_1 = SQRT((1/n)*TOTAL(range1 ^ 2.))
+          
+          ;Testing if input of math effects the reading of code
+          z = (range1)^2.
+          w = (y)^2.
+          
+          
+          resd[j]= SQRT((1/n)*TOTAL(range1 ^ 2.))
+          print, "resd", resd
+          ;Creating a legend
+          
+          summation1[j] = TSUM( y^2.0 / Sig)
+          print, 'Sigma_1',summation1
+          
+          integres1[j] = TSUM( range1 / Sigma_1)
+          print, 'integ res1',integres1
+          
+          integres2[j] = TSUM( z/ Sigma_1)
+          print, 'integ res2', integres2
           
    Creating a legend
    
@@ -191,8 +246,7 @@ Saving individual plots to Reyna Folder as titles of data
        
       ENDFOR 
       
-This will be the location of the empty arrays to hold the metric values after each iteration.
-Perhaps using a list function and adding elements to it and then converting it to an array? 
+
     ENDFOR
 
     END  
