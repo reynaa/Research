@@ -279,5 +279,29 @@ Storing Histograms into the location of the plots
       
 
     ENDFOR
+Define the first graph
+
+    b1 = BARPLOT(answer, index=0,NBARS=2, FILL_COLOR ='blue', TITLE = ' Metrics ')
+
+Define second barplot to go in same window
+
+    b2 = BARPLOT(answer1, index=1, nbars=2, FILL_COLOR = 'gold', /OVERPLOT)
+
+
+Use TEXT function to add annotations to describe the data
+
+    ints = TEXT(90,6, 'Integral', /CURRENT, COLOR = 'blue', /DATA)
+    ints2 = TEXT(90,5, 'Integral Squared', /CURRENT, COLOR = 'gold', /DATA)
+
+    b3 = BARPLOT(answer4, index=1 ,nbars=2, FILL_COLOR = 'red',TITLE = 'Metrics')
+    b4 = BARPLOT(answer5, index=2, nbars=2, FILL_COLOR = 'green', /OVERPLOT)
+
+    diff_squared = TEXT(100,75, '$diff^2$/$ \sigma$', /CURRENT, COLOR = 'red', /DATA)
+    diff_unsquared = TEXT(100,70, 'diff/$\sigma$', /CURRENT, COLOR = 'green',/DATA)
+
+    b5= BARPLOT(answer2,index=1, nbars =2, FILL_COLOR = 'purple', TITLE = 'Maximums')
+
+    b6 = BARPLOT(answer3, index =1, nbars =2, FILL_COLOR = 'orange', TITLE = 'Root Mean Squared ($\sigma$)')
+
 
     END  
